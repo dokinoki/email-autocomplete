@@ -25,7 +25,9 @@
       }
 
       //get input padding,border and margin to offset text
-      this.fieldLeftOffset = (this.$field.outerWidth(true) - this.$field.width()) / 2;
+      this.fieldLeftOffset = (this.$field.outerWidth() - this.$field.width()) / 2;
+      this.fieldLeftBorder = parseInt(this.$field.css('border-left-width'));
+      this.fieldLeftPadding = parseInt(this.$field.css('padding-left'));
 
       //wrap our field
       var $wrap = $("<div class='eac-input-wrap' />").css({
@@ -47,7 +49,7 @@
 
       //create the suggestion overlay
       /* touchstart jquery 1.7+ */
-      var heightPad = (this.$field.outerHeight(true) - this.$field.height()) / 2; //padding+border
+      var heightPad = (this.$field.outerHeight() - this.$field.height()) / 2; //padding+border
       this.$suggOverlay = $("<span class='"+this.options.suggClass+"' />").css({
         display: "block",
         "box-sizing": "content-box", //standardize
@@ -122,8 +124,8 @@
       var cvalWidth = this.$cval.width();
 
       if(this.$field.outerWidth() > cvalWidth){
-        //offset our suggestion container
-        this.$suggOverlay.css('left', this.fieldLeftOffset + cvalWidth + "px");
+        //offset our suggestion container (offset + border + padding)
+        this.$suggOverlay.css('left', this.fieldLeftOffset + this.fieldLeftBorder + this.fieldLeftPadding + cvalWidth + "px");
       }
     },
 
